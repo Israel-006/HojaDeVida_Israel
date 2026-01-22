@@ -128,9 +128,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Configuración de credenciales 
 # ¡OJO ISRAEL! REEMPLAZA ESTOS VALORES CON TUS CLAVES REALES DE CLOUDINARY
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'PON_AQUI_TU_CLOUD_NAME', 
-    'API_KEY': 'PON_AQUI_TU_API_KEY', 
-    'API_SECRET': 'PON_AQUI_TU_API_SECRET'
+    'CLOUD_NAME': 'ds2gczrkb', 
+    'API_KEY': '849285535365445', 
+    'API_SECRET': 'Rd96TzkSjau6UXbl9vsJMh4HcR0'
 }
 
 # Esto conecta Django con Cloudinary
