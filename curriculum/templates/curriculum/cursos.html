@@ -1,0 +1,99 @@
+{% extends 'curriculum/base.html' %}
+{% load static %}
+
+{% block title %}Cursos y Certificaciones - {{ perfil.nombres }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-20 relative z-10">
+    
+    <!-- Background Decorativo -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[20%] left-[50%] -translate-x-1/2 w-[800px] h-[800px] bg-[#BBD2D6]/10 blur-[120px] rounded-full"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <!-- 1. ENCABEZADO -->
+        <div class="text-center mb-16 fade-in">
+            <div class="flex items-center justify-center gap-4 mb-6">
+                <div class="h-1.5 w-16 bg-[#BBD2D6] rounded-full"></div>
+                <span class="text-gray-400 font-black tracking-[0.2em] text-sm uppercase">Formación Continua</span>
+                <div class="h-1.5 w-16 bg-[#BBD2D6] rounded-full"></div>
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-6 tracking-tighter">
+                CURSOS Y <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5A7D84] to-[#1a1a1a] italic pr-4">CERTIFICACIONES</span>
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-gray-600 text-lg leading-relaxed">
+                Actualización constante en nuevas tecnologías y habilidades especializadas.
+            </p>
+        </div>
+
+        <!-- 2. GRID DE CURSOS (Diseño Compacto) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for curso in cursos %}
+            <article class="bg-white p-8 rounded-[2rem] shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full relative overflow-hidden">
+                
+                <!-- Borde lateral de acento -->
+                <div class="absolute left-0 top-0 h-full w-1.5 bg-[#F0F4F5] group-hover:bg-[#5A7D84] transition-colors duration-300"></div>
+
+                <div class="flex justify-between items-start mb-6 pl-4">
+                    <!-- Icono Decorativo -->
+                    <div class="w-12 h-12 bg-[#F0F4F5] rounded-xl flex items-center justify-center text-[#5A7D84] group-hover:rotate-12 transition-transform duration-300">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    
+                    <!-- Año -->
+                    <span class="text-xs font-bold text-gray-400 border border-gray-100 px-3 py-1 rounded-full">
+                        {{ curso.fecha|date:"Y" }}
+                    </span>
+                </div>
+
+                <div class="pl-4 flex-grow">
+                    <h3 class="text-xl font-black text-[#1a1a1a] mb-2 leading-tight group-hover:text-[#5A7D84] transition-colors">
+                        {{ curso.titulo }}
+                    </h3>
+                    
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-3 h-3"></i> {{ curso.institucion }}
+                    </p>
+                    
+                    {% if curso.descripcion %}
+                    <p class="text-gray-500 text-sm leading-relaxed line-clamp-3">
+                        {{ curso.descripcion }}
+                    </p>
+                    {% endif %}
+                </div>
+
+                <!-- Enlace al certificado (si existe) -->
+                {% if curso.link_certificado %}
+                <div class="mt-6 pl-4 pt-4 border-t border-gray-50">
+                    <a href="{{ curso.link_certificado }}" target="_blank" class="inline-flex items-center gap-2 text-xs font-black text-[#5A7D84] uppercase tracking-widest hover:underline">
+                        Ver Credencial <i data-lucide="external-link" class="w-3 h-3"></i>
+                    </a>
+                </div>
+                {% endif %}
+
+            </article>
+            {% empty %}
+            <!-- Estado Vacío -->
+            <div class="col-span-full py-20 text-center">
+                <div class="inline-block p-6 rounded-full bg-gray-50 mb-6">
+                    <i data-lucide="award" class="w-12 h-12 text-gray-300"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-400">Aún no hay certificaciones publicadas</h3>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botón Volver -->
+        <div class="mt-20 text-center">
+            <a href="{% url 'inicio' %}" class="inline-flex items-center gap-2 text-gray-500 hover:text-[#5A7D84] font-bold transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver al Inicio
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

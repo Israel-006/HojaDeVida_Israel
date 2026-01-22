@@ -1,0 +1,353 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CV - {{ perfil.nombres }}</title>
+    <style>
+        /* --- CONFIGURACIÓN DE PÁGINA --- */
+        @page {
+            size: a4;
+            margin: 1cm; /* Margen elegante de 1cm alrededor */
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #333333;
+            line-height: 1.5;
+            font-size: 10pt;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        /* --- TIPOGRAFÍA --- */
+        h1, h2, h3, h4, h5 {
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+        }
+
+        /* --- LAYOUT PRINCIPAL (TABLA) --- */
+        table.layout {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        td {
+            vertical-align: top;
+            padding: 0;
+        }
+
+        /* --- CABECERA --- */
+        .header-table {
+            width: 100%;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #5A7D84; /* Línea de acento */
+            padding-bottom: 20px;
+        }
+
+        .header-name {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-title {
+            font-size: 12pt;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #5A7D84; /* Tu color corporativo */
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .header-contact {
+            font-size: 9pt;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* --- COLUMNAS --- */
+        .sidebar {
+            width: 28%; /* Columna izquierda estrecha */
+            padding-right: 20px;
+            border-right: 1px solid #eeeeee;
+        }
+
+        .main {
+            width: 72%; /* Columna derecha ancha */
+            padding-left: 25px;
+        }
+
+        /* --- FOTO --- */
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%; /* Intenta redondear */
+            object-fit: cover;
+            border: 3px solid #5A7D84;
+            margin-bottom: 25px;
+        }
+
+        /* --- TÍTULOS DE SECCIÓN --- */
+        .section-title {
+            font-size: 11pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #2c3e50;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .sidebar .section-title {
+            color: #5A7D84; /* Títulos azules en sidebar */
+            border-bottom: 1px solid #5A7D84;
+        }
+
+        /* --- ITEMS --- */
+        .item-block {
+            margin-bottom: 18px;
+        }
+
+        .item-header {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .item-role {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .item-company {
+            font-size: 10pt;
+            font-weight: bold;
+            color: #5A7D84;
+        }
+
+        .item-date {
+            font-size: 9pt;
+            color: #7f8c8d;
+            font-style: italic;
+            float: right; /* Fecha a la derecha */
+        }
+
+        .item-desc {
+            font-size: 10pt;
+            color: #444;
+            text-align: justify;
+            margin-top: 5px;
+        }
+
+        /* --- LISTAS SIDEBAR --- */
+        ul.sidebar-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.sidebar-list li {
+            margin-bottom: 10px;
+            font-size: 9.5pt;
+            border-left: 3px solid #eee;
+            padding-left: 10px;
+        }
+
+        /* --- HABILIDADES --- */
+        .skill-tag {
+            display: inline-block;
+            background: #f0f2f5;
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 8pt;
+            margin-bottom: 5px;
+            margin-right: 3px;
+            font-weight: bold;
+        }
+
+        /* Contacto Sidebar */
+        .contact-item {
+            margin-bottom: 12px;
+            font-size: 9pt;
+            word-wrap: break-word;
+        }
+        .contact-label {
+            font-weight: bold;
+            display: block;
+            font-size: 8pt;
+            color: #5A7D84;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- CABECERA PRINCIPAL (Nombre y Título) -->
+    <table class="header-table">
+        <tr>
+            <!-- Texto Cabecera -->
+            <td style="vertical-align: bottom;">
+                <div class="header-name">{{ perfil.nombres }} {{ perfil.apellidos }}</div>
+                <!-- Cambio solicitado: Default a CURRICULUM VITAE -->
+                <div class="header-title">{{ perfil.profesion|default:"CURRICULUM VITAE" }}</div>
+            </td>
+            <!-- Contacto Rápido Cabecera (Opcional, alineado derecha) -->
+            <td style="text-align: right; vertical-align: bottom;">
+                <div class="header-contact">
+                    {{ perfil.email }}<br>
+                    {{ perfil.telefono }}<br>
+                    {{ perfil.direccion }}
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- CUERPO DEL CV -->
+    <table class="layout">
+        <tr>
+            <!-- ================= SIDEBAR (IZQUIERDA) ================= -->
+            <td class="sidebar">
+                
+                <!-- FOTO -->
+                <div style="text-align: center;">
+                    {% if perfil.foto %}
+                        <img src="{{ perfil.foto.path }}" class="profile-img">
+                    {% else %}
+                        <div style="width:130px; height:130px; background:#eee; border-radius:50%; margin:0 auto 20px auto; border:3px solid #5A7D84;"></div>
+                    {% endif %}
+                </div>
+
+                <!-- PERFIL RESUMEN -->
+                {% if perfil.descripcion_perfil %}
+                <div class="section-title">Perfil</div>
+                <div style="font-size: 9.5pt; text-align: justify; color: #555;">
+                    {{ perfil.descripcion_perfil }}
+                </div>
+                {% endif %}
+
+                <!-- CONTACTO DETALLADO -->
+                <div class="section-title">Datos</div>
+                
+                {% if perfil.cedula %}
+                <div class="contact-item">
+                    <span class="contact-label">ID / Cédula</span>
+                    {{ perfil.cedula }}
+                </div>
+                {% endif %}
+                
+                <div class="contact-item">
+                    <span class="contact-label">Email</span>
+                    {{ perfil.email }}
+                </div>
+                
+                <div class="contact-item">
+                    <span class="contact-label">Teléfono</span>
+                    {{ perfil.telefono }}
+                </div>
+
+                {% if perfil.sitio_web %}
+                <div class="contact-item">
+                    <span class="contact-label">Web</span>
+                    {{ perfil.sitio_web }}
+                </div>
+                {% endif %}
+
+            </td>
+
+            <!-- ================= CONTENIDO PRINCIPAL (DERECHA) ================= -->
+            <td class="main">
+                
+                <!-- EXPERIENCIA LABORAL -->
+                {% if experiencias %}
+                <div class="section-title">Experiencia Profesional</div>
+                
+                {% for exp in experiencias %}
+                <div class="item-block">
+                    <div class="item-header">
+                        <span class="item-role">{{ exp.cargo }}</span>
+                        <!-- Fecha flotante a la derecha -->
+                        <span class="item-date">{{ exp.fecha_inicio|date:"Y" }} - {% if exp.fecha_fin %}{{ exp.fecha_fin|date:"Y" }}{% else %}Actual{% endif %}</span>
+                    </div>
+                    <div class="item-company">{{ exp.empresa }}</div>
+                    <div class="item-desc">
+                        {{ exp.descripcion|linebreaksbr }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <!-- EDUCACIÓN -->
+                {% if estudios %}
+                <div class="section-title">Formación Académica</div>
+                
+                {% for edu in estudios %}
+                <div class="item-block">
+                    <div class="item-header">
+                        <span class="item-role">{{ edu.titulo }}</span>
+                        <span class="item-date">{{ edu.fecha_inicio|date:"Y" }} - {{ edu.fecha_fin|date:"Y"|default:"Actual" }}</span>
+                    </div>
+                    <div class="item-company" style="color: #444; font-weight: normal; font-style: italic;">
+                        {{ edu.institucion }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <!-- CURSOS Y CERTIFICACIONES -->
+                {% if cursos %}
+                <div class="section-title">Cursos y Certificaciones</div>
+                
+                <table style="width: 100%;">
+                    {% for curso in cursos %}
+                    <tr>
+                        <td style="padding-bottom: 8px;">
+                            <strong style="font-size: 10pt; color: #333;">{{ curso.nombre_curso }}</strong><br>
+                            <span style="font-size: 9pt; color: #666;">{{ curso.institucion }}</span>
+                        </td>
+                        <td style="text-align: right; width: 60px; vertical-align: top;">
+                            <span style="font-size: 9pt; color: #888;">{{ curso.fecha|date:"Y" }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+
+                <!-- LOGROS / RECONOCIMIENTOS -->
+                {% if reconocimientos %}
+                <div class="section-title">Logros</div>
+                <ul style="padding-left: 20px; color: #444;">
+                    {% for rec in reconocimientos %}
+                    <li style="margin-bottom: 5px;">
+                        <strong>{{ rec.nombre }}</strong> - {{ rec.institucion }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+            </td>
+        </tr>
+    </table>
+
+    <!-- Botón de impresión (Solo pantalla) -->
+    <div style="position: fixed; top: 20px; right: 20px; background: #333; padding: 10px 20px; border-radius: 5px; display: none;" class="no-print">
+        <button onclick="window.print()" style="background: none; border: none; color: white; cursor: pointer; font-weight: bold;">Imprimir / PDF</button>
+    </div>
+    <style>
+        @media screen {
+            .no-print { display: block !important; }
+        }
+    </style>
+
+</body>
+</html>

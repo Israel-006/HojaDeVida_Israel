@@ -1,0 +1,262 @@
+{% extends 'curriculum/base.html' %}
+
+{% block title %}Datos Personales | Valeria Meza{% endblock %}
+
+{% block content %}
+<div class="fade-in max-w-7xl mx-auto pb-20 pt-10">
+    
+    <!-- Encabezado con Estilo -->
+    <div class="mb-12 text-center md:text-left">
+        <h2 class="text-5xl md:text-6xl font-black italic uppercase tracking-tighter text-[#1a1a1a] leading-none">
+            Datos <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5A7D84] to-[#1a1a1a]">Personales</span>
+        </h2>
+        <div class="h-2 w-24 bg-[#BBD2D6] mt-4 rounded-full mx-auto md:mx-0"></div>
+    </div>
+
+    <!-- Contenedor Principal -->
+    <div class="grid lg:grid-cols-12 gap-10">
+        
+        <!-- Columna Izquierda: SECCIÓN PRINCIPAL (Identidad + Contacto) -->
+        <div class="lg:col-span-9 space-y-8 order-2 lg:order-1">
+            
+            <!-- SECCIÓN 1: Identidad Básica + FOTO -->
+            <div class="bg-white p-8 md:p-10 rounded-[3.5rem] border border-gray-100 shadow-lg shadow-gray-100/50 hover:shadow-xl transition-shadow duration-500">
+                <div class="flex flex-col-reverse md:flex-row gap-12 items-start">
+                    
+                    <!-- Bloque de Texto (Izquierda) -->
+                    <div class="flex-grow w-full">
+                        <div class="border-b border-gray-50 pb-4 mb-6">
+                            <h3 class="text-xs font-black uppercase tracking-[0.5em] text-[#1a1a1a]">Identidad Básica</h3>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-4">
+                            <!-- Datos Personales -->
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Nombres</label>
+                                <p class="text-lg font-black text-gray-800 leading-tight">{{ perfil.nombres }}</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Apellidos</label>
+                                <p class="text-lg font-black text-gray-800 leading-tight">{{ perfil.apellidos }}</p>
+                            </div>
+                             <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Identificación</label>
+                                <p class="text-lg font-black text-gray-800">{{ perfil.cedula }}</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Sexo / Género</label>
+                                <p class="text-lg font-black text-gray-800">{{ perfil.sexo }}</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Estado Civil</label>
+                                <p class="text-lg font-black text-gray-800">{{ perfil.estado_civil }}</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Nacionalidad</label>
+                                <p class="text-lg font-black text-gray-800">{{ perfil.nacionalidad }}</p>
+                            </div>
+                             <!-- Datos de Origen y Fecha -->
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Lugar Nacimiento</label>
+                                <p class="text-lg font-black text-gray-800 leading-tight">{{ perfil.lugar_nacimiento }}</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Fecha Nacimiento</label>
+                                <p class="text-lg font-black text-gray-800">{{ perfil.fecha_nacimiento }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FOTO CON ANIMACIÓN DE MARCO (Derecha) -->
+                    <div class="shrink-0 mx-auto md:mx-0">
+                        <div class="relative w-48 h-48 md:w-56 md:h-56 flex items-center justify-center">
+                            <!-- Marco Animado -->
+                            <div class="steam-frame absolute inset-0 rounded-[2rem]"></div>
+                            
+                            <!-- Imagen -->
+                            <div class="relative z-10 w-[calc(100%-8px)] h-[calc(100%-8px)] bg-white rounded-[1.8rem] overflow-hidden border-4 border-white shadow-inner">
+                                {% if perfil.foto %}
+                                    <img src="{{ perfil.foto.url }}" alt="{{ perfil.nombres }}" class="w-full h-full object-cover">
+                                {% else %}
+                                    <div class="w-full h-full bg-gray-50 flex items-center justify-center text-gray-300">
+                                        <i data-lucide="user" size="64" class="opacity-20"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: Contacto & Digital -->
+            <div class="bg-white p-10 rounded-[3.5rem] border border-gray-100 shadow-lg shadow-gray-100/50 hover:shadow-xl transition-shadow duration-500">
+                <div class="flex flex-col md:flex-row gap-10">
+                    
+                    <!-- Información de Texto (Izquierda) -->
+                    <div class="flex-grow">
+                        <div class="border-b border-gray-50 pb-4 mb-6">
+                            <h3 class="text-xs font-black uppercase tracking-[0.5em] text-[#5A7D84]">Contacto & Digital</h3>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Teléfono Personal</label>
+                                <p class="text-xl font-black text-gray-800">{{ perfil.telefono }}</p>
+                            </div>
+                            
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Teléfono Convencional</label>
+                                <p class="text-xl font-black text-gray-800">{{ perfil.telefono_convencional|default:"N/A" }}</p>
+                            </div>
+
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Email Profesional</label>
+                                <p class="text-sm font-black text-gray-800 truncate">{{ perfil.email }}</p>
+                            </div>
+                            
+                            <div>
+                                <label class="text-[9px] font-black uppercase tracking-[0.3em] text-[#BBD2D6] block mb-1">Sitio Web</label>
+                                <p class="text-sm font-black text-gray-800">{{ perfil.sitio_web|default:"valeria.dev" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Columna Derecha: UBICACIONES + ACCESOS (Orden Invertido) -->
+        <div class="lg:col-span-3 space-y-8 order-1 lg:order-2">
+            
+            <!-- 1. Tarjeta Ubicaciones (Ahora arriba y SIN LICENCIA) -->
+            <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-gray-50 relative overflow-hidden group hover:shadow-md transition-shadow">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <i data-lucide="map" size="40" class="text-[#5A7D84]"></i>
+                </div>
+                
+                <h3 class="text-[9px] font-black uppercase tracking-[0.4em] text-[#5A7D84] mb-8 flex items-center gap-2">
+                    <span class="h-px w-4 bg-[#BBD2D6]"></span> Ubicaciones
+                </h3>
+                
+                <div class="space-y-8">
+                    <!-- Domicilio -->
+                    <div class="flex gap-4">
+                        <div class="shrink-0 w-12 h-12 bg-[#F0F4F5] rounded-2xl flex items-center justify-center text-[#5A7D84]">
+                            <i data-lucide="map-pin" size="20"></i>
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-400 block mb-1">Domicilio</label>
+                            <p class="text-sm font-bold text-gray-800 leading-tight">{{ perfil.direccion }}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Trabajo -->
+                    <div class="flex gap-4">
+                        <div class="shrink-0 w-12 h-12 bg-[#F0F4F5] rounded-2xl flex items-center justify-center text-[#5A7D84]">
+                            <i data-lucide="building-2" size="20"></i>
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-400 block mb-1">Trabajo</label>
+                            <p class="text-sm font-bold text-gray-800 leading-tight">{{ perfil.direccion_trabajo|default:"Studio Creativo Manta" }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REDES SOCIALES -->
+                <div class="mt-8 pt-6 border-t border-gray-100">
+                    <h4 class="text-[9px] font-black uppercase tracking-[0.4em] text-gray-300 mb-4 text-center">Social</h4>
+                    <div class="flex gap-3 justify-center">
+                        {% if perfil.url_linkedin %}
+                        <a href="{{ perfil.url_linkedin }}" target="_blank" class="w-10 h-10 bg-[#F0F4F5] rounded-xl flex items-center justify-center text-gray-400 hover:text-[#0077b5] hover:bg-white hover:shadow-md transition-all transform hover:scale-110 border border-transparent hover:border-gray-100">
+                            <i data-lucide="linkedin" size="20"></i>
+                        </a>
+                        {% endif %}
+                        
+                        {% if perfil.url_github %}
+                        <a href="{{ perfil.url_github }}" target="_blank" class="w-10 h-10 bg-[#F0F4F5] rounded-xl flex items-center justify-center text-gray-400 hover:text-[#1a1a1a] hover:bg-white hover:shadow-md transition-all transform hover:scale-110 border border-transparent hover:border-gray-100">
+                            <i data-lucide="github" size="20"></i>
+                        </a>
+                        {% endif %}
+                        
+                        {% if perfil.url_instagram %}
+                        <a href="{{ perfil.url_instagram }}" target="_blank" class="w-10 h-10 bg-[#F0F4F5] rounded-xl flex items-center justify-center text-gray-400 hover:text-[#E1306C] hover:bg-white hover:shadow-md transition-all transform hover:scale-110 border border-transparent hover:border-gray-100">
+                            <i data-lucide="instagram" size="20"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Tarjeta Accesos Rápidos (Compacta y Estética) -->
+            <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-gray-50 relative overflow-hidden group hover:shadow-md transition-shadow">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <i data-lucide="zap" size="40" class="text-[#5A7D84]"></i>
+                </div>
+                
+                <h3 class="text-[9px] font-black uppercase tracking-[0.4em] text-[#5A7D84] mb-4 flex items-center gap-2">
+                    <span class="h-px w-4 bg-[#BBD2D6]"></span> Accesos
+                </h3>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Generar CV -->
+                    <a href="{% url 'generar_cv' %}" target="_blank" class="flex flex-col items-center justify-center p-3 bg-[#F0F4F5] rounded-2xl hover:bg-[#5A7D84] hover:text-white transition-all group/btn text-center h-20">
+                        <i data-lucide="file-text" size="20" class="text-[#5A7D84] group-hover/btn:text-white mb-1.5 transition-colors"></i>
+                        <span class="text-[7px] font-black uppercase tracking-wider">Generar CV</span>
+                    </a>
+
+                    <!-- Experiencia -->
+                    <a href="{% url 'experiencia' %}" class="flex flex-col items-center justify-center p-3 bg-[#F0F4F5] rounded-2xl hover:bg-[#5A7D84] hover:text-white transition-all group/btn text-center h-20">
+                        <i data-lucide="briefcase" size="20" class="text-[#5A7D84] group-hover/btn:text-white mb-1.5 transition-colors"></i>
+                        <span class="text-[7px] font-black uppercase tracking-wider">Experiencia</span>
+                    </a>
+
+                    <!-- Proyectos -->
+                    <a href="{% url 'trabajos' %}" class="flex flex-col items-center justify-center p-3 bg-[#F0F4F5] rounded-2xl hover:bg-[#5A7D84] hover:text-white transition-all group/btn text-center h-20">
+                        <i data-lucide="folder-git" size="20" class="text-[#5A7D84] group-hover/btn:text-white mb-1.5 transition-colors"></i>
+                        <span class="text-[7px] font-black uppercase tracking-wider">Proyectos</span>
+                    </a>
+
+                    <!-- Venta -->
+                    <a href="{% url 'venta' %}" class="flex flex-col items-center justify-center p-3 bg-[#F0F4F5] rounded-2xl hover:bg-[#5A7D84] hover:text-white transition-all group/btn text-center h-20">
+                        <i data-lucide="shopping-bag" size="20" class="text-[#5A7D84] group-hover/btn:text-white mb-1.5 transition-colors"></i>
+                        <span class="text-[7px] font-black uppercase tracking-wider">Venta</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .fade-in { animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* Animación del Marco estilo Steam/Gamer */
+    .steam-frame {
+        position: absolute;
+        inset: -4px;
+        z-index: 0;
+        border-radius: 2.2rem;
+        background: conic-gradient(from 0deg, transparent 0deg, #BBD2D6 90deg, transparent 180deg, #5A7D84 270deg, transparent 360deg);
+        animation: spin-frame 4s linear infinite;
+    }
+    
+    /* Capa extra para suavizar el efecto */
+    .steam-frame::before {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border-radius: 1.8rem;
+        background: white;
+        z-index: 1;
+    }
+
+    @keyframes spin-frame {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}

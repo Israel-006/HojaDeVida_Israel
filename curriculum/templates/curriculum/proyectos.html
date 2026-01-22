@@ -1,0 +1,107 @@
+{% extends 'curriculum/base.html' %}
+{% load static %}
+
+{% block title %}Proyectos y Trayectoria - {{ perfil.nombres }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-20 relative z-10">
+    
+    <!-- Fondo Decorativo (Igual que en inicio pero más sutil) -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[10%] right-[10%] w-[500px] h-[500px] bg-[#BBD2D6]/10 blur-[100px] rounded-full"></div>
+        <div class="absolute bottom-[10%] left-[10%] w-[400px] h-[400px] bg-[#5A7D84]/10 blur-[100px] rounded-full"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6">
+        
+        <!-- 1. ENCABEZADO DE SECCIÓN -->
+        <div class="text-center mb-20 fade-in">
+            <!-- Etiqueta decorativa -->
+            <div class="flex items-center justify-center gap-4 mb-6">
+                <div class="h-1.5 w-16 bg-[#BBD2D6] rounded-full"></div>
+                <span class="text-gray-400 font-black tracking-[0.2em] text-sm uppercase">Portfolio</span>
+                <div class="h-1.5 w-16 bg-[#BBD2D6] rounded-full"></div>
+            </div>
+            
+            <!-- Título Principal -->
+            <h1 class="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-6 tracking-tighter">
+                MIS 
+                <!-- Agregado 'pr-4' para evitar que se corte la última letra itálica -->
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5A7D84] to-[#1a1a1a] italic pr-4">PROYECTOS</span>
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-gray-600 text-lg leading-relaxed">
+                Una colección de soluciones tecnológicas desarrolladas con pasión, enfoque lógico y creatividad.
+            </p>
+        </div>
+
+        <!-- 2. GRID DE PROYECTOS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            {% for trabajo in trabajos %}
+            <article class="group relative bg-white rounded-[2rem] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 overflow-hidden flex flex-col h-full">
+                
+                <!-- Imagen del Proyecto -->
+                <div class="h-48 overflow-hidden bg-gray-100 relative">
+                    {% if trabajo.imagen %}
+                        <img src="{{ trabajo.imagen.url }}" alt="{{ trabajo.titulo }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    {% else %}
+                        <!-- Placeholder si no hay imagen -->
+                        <div class="w-full h-full flex items-center justify-center bg-[#1a1a1a] group-hover:bg-[#5A7D84] transition-colors duration-500">
+                            <i data-lucide="code-2" class="text-[#BBD2D6] w-12 h-12 opacity-50"></i>
+                        </div>
+                    {% endif %}
+                    <!-- Overlay sutil decorativo -->
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                </div>
+
+                <!-- Contenido de la Tarjeta -->
+                <div class="p-8 flex flex-col flex-grow">
+                    <!-- Fecha o Categoría pequeña -->
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-bold text-[#5A7D84] tracking-widest uppercase">{{ trabajo.fecha|date:"Y"|default:"Reciente" }}</span>
+                        <i data-lucide="folder-git" class="w-4 h-4 text-gray-300"></i>
+                    </div>
+
+                    <h3 class="text-2xl font-black text-[#1a1a1a] mb-3 group-hover:text-[#5A7D84] transition-colors leading-tight">
+                        {{ trabajo.titulo }}
+                    </h3>
+                    
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+                        {{ trabajo.descripcion }}
+                    </p>
+
+                    <!-- Tecnologías (Tags) -->
+                    <div class="flex flex-wrap gap-2 mt-auto pt-6 border-t border-gray-100">
+                        {% for tec in trabajo.tecnologias.all|slice:":4" %}
+                        <span class="px-3 py-1 bg-[#F0F4F5] text-[#5A7D84] text-[10px] font-bold rounded-full uppercase tracking-wider">
+                            {{ tec.nombre }}
+                        </span>
+                        {% empty %}
+                         <span class="px-3 py-1 bg-[#F0F4F5] text-gray-400 text-[10px] font-bold rounded-full uppercase tracking-wider">Desarrollo</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <!-- Estado Vacío (Se muestra si no hay proyectos en la BD) -->
+            <div class="col-span-full py-20 text-center">
+                <div class="inline-block p-6 rounded-full bg-gray-50 mb-6">
+                    <i data-lucide="folder-open" class="w-12 h-12 text-gray-300"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-400">Aún no hay proyectos publicados</h3>
+                <p class="text-gray-400 mt-2">Pronto verás mis trabajos más recientes aquí.</p>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Botón Volver -->
+        <div class="mt-20 text-center">
+            <a href="{% url 'inicio' %}" class="inline-flex items-center gap-2 text-gray-500 hover:text-[#5A7D84] font-bold transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver al Inicio
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
