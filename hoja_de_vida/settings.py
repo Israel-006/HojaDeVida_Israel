@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'curriculum', 
 ]
 
@@ -137,3 +139,16 @@ from pathlib import Path
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# --- CONFIGURACIÓN DE CLOUDINARY ---
+
+# --- PEGA ESTO AL FINAL DE TU SETTINGS.PY ---
+
+# Configuración de credenciales (búscalas en tu Dashboard de Cloudinary)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'PON_AQUI_TU_CLOUD_NAME',
+    'API_KEY': 'PON_AQUI_TU_API_KEY',
+    'API_SECRET': 'PON_AQUI_TU_API_SECRET'
+}
+
+# Esta es la línea mágica que te falta:
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
