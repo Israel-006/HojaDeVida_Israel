@@ -10,20 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-"""
-Django settings for hoja_de_vida project.
-"""
-
 from pathlib import Path
 import os
 import dj_database_url
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+
 # SECURITY WARNING: keep the secret key used in production secret!
-# (Corregido: Tenías un error de doble asignación aquí)
-SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-cambiar-esto-en-produccion')
+SECRET_KEY = SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
@@ -33,7 +31,7 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# Application definition
+# hoja_de_vida/settings.py
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,21 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',       # Importante: Antes de staticfiles
     'django.contrib.staticfiles',
-    'cloudinary',               # Importante: Después de staticfiles
     'curriculum', 
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- Middleware para CSS en Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'hoja_de_vida.urls'
@@ -71,15 +68,19 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media', # Necesario para las imágenes
+                'django.template.context_processors.media',  # <--- AÑADE ESTA LÍNEA
             ],
         },
     },
 ]
 
+
 WSGI_APPLICATION = 'hoja_de_vida.wsgi.application'
 
+
 # Database
+# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
 DATABASES = {
     'default': dj_database_url.config(
         default='postgresql://postgres:postgres@localhost:5432/mysite',
@@ -87,7 +88,10 @@ DATABASES = {
     )
 }
 
+
 # Password validation
+# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -103,35 +107,33 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
+# https://docs.djangoproject.com/en/6.0/topics/i18n/
+
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_TZ = True
 
-# --- STATIC FILES (CSS, JavaScript, Images) ---
 
-STATIC_URL = '/static/'
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-# (CORREGIDO: Esto debe estar FUERA del if para que Render siempre sepa dónde guardar los estilos)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Configuración de WhiteNoise para producción
+STATIC_URL = 'static/'
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# hoja_de_vida/settings.py
 
-# --- MEDIA FILES & CLOUDINARY ---
+import os
+from pathlib import Path
+
+# ... (código existente)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Configuración de credenciales 
-# ¡OJO ISRAEL! REEMPLAZA ESTOS VALORES CON TUS CLAVES REALES DE CLOUDINARY
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'ds2gczrkb', 
-    'API_KEY': '849285535365445', 
-    'API_SECRET': 'Rd96TzkSjau6UXbl9vsJMh4HcR0'
-}
-
-# Esto conecta Django con Cloudinary
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
