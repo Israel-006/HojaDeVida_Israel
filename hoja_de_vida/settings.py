@@ -118,7 +118,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Configuración de WhiteNoise para producción
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # --- MEDIA FILES & CLOUDINARY ---
 
